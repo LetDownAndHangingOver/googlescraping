@@ -28,15 +28,11 @@ class stdOutListener(StreamListener):
                 date  = all_data["created_at"]
                 authorName  = all_data["user"]["name"]
                 authorUserName  = all_data["user"]["screen_name"]
-                text = f'{{Author Name : {authorName}, Author UserName : {authorUserName}, Tweet : {tweet}, Date : {date}}}'
                 dicto["Nom auteur"] = authorName
                 dicto["@"] = authorUserName
                 dicto["texte"] = tweet
                 dicto["date"] = date
                 self.db[self.collection_name].insert_one(dicto)
-                output = open("tweet.txt", "a", encoding="utf-8")
-                output.write(text)
-                output.close()
                 print(data)
                 return True
             except Exception as e:
@@ -59,4 +55,4 @@ if __name__ == "__main__":
 
     stream = Stream(auth, listener)
 
-    stream.filter(track=['racisme'], languages=['fr'])
+    stream.filter(track=['Charlie hebdo', 'Racisme biologique', 'institution policière', 'Discrimination intersectionnelle', 'Immigrés', 'Racisme biologique'], languages=['fr'])
