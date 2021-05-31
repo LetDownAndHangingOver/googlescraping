@@ -12,16 +12,17 @@ import logging
 #
 class MongodbPipeline:
 
-    collection_name = "google articles"
+    collection_name = "articles"
 
     def open_spider(self, spider):
         self.client = pymongo.MongoClient("mongodb+srv://moe:testtest@cluster0.pmexa.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-        self.db = self.client["google"]
+        self.db = self.client[spider.name]
 
     def close_spider(self, spider):
         self.client.close()
 
 
     def process_item(self, item, spider):
+        print('processing?')
         self.db[self.collection_name].insert(item)
         return item
